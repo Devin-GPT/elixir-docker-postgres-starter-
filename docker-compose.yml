@@ -1,0 +1,31 @@
+version: '3'
+services:
+  # clarity:
+  #   build: .
+  #   ports:
+  #     - "4005:4000"
+  #   volumes:
+  #     - .:/app
+  #   depends_on:
+  #     - clarity-postgres
+  #   environment:
+  #     - MIX_ENV=dev
+  #     - PORT=4000
+  #   command: mix compile && mix ecto.migrate && mix clarity.seed && mix phx.server
+  auth-postgres:
+    image: postgres:10
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=auth_dev
+    volumes: 
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
+
+
+# psql -U postgres -d auth-postgres -f /create_users_table.sql
